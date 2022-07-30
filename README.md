@@ -1,4 +1,5 @@
-# Go语言尝试实现分布式缓存  参照groupcache
+# Go语言尝试实现分布式缓存 
+本项目按照groupcache实现了，有以下技术点
 1. LRU算法实现
 2. 单机并发缓存  基于`sync.Mutex`封装LRU的方法，使其支持并发读写。
 3. HTTP服务端
