@@ -2,6 +2,7 @@ package geecache
 
 import (
 	"fmt"
+	pb "geecache/geecachepb"
 	"log"
 	"singleflight"
 	"sync"
@@ -116,11 +117,19 @@ func (g *Group) load(key string) (value ByteView, err error) {
 
 // getFromPeer  从peer中获取缓存数据
 func (g *Group) getFromPeer(peer PeerGetter, key string) (ByteView, error) {
-	bytes, err := peer.Get(g.name, key)
+
+	req := &pb.Request{
+		Group: g.name,
+		Key:   key,
+	}
+
+	res := &pb.Response{}
+
+	err := peer.Get(req, res)
 	if err != nil {
 		return ByteView{}, err
 	}
-	return ByteView{b: bytes}, nil
+	return ByteView{b: res.Value}, nil
 }
 
 // getLocally 从本地获取数据，并加入缓存

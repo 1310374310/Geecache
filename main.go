@@ -19,7 +19,6 @@ func createGroup() *geecache.Group {
 		func(key string) ([]byte, error) {
 			log.Println("[SlowDB] search key", key)
 			if v, ok := db[key]; ok {
-				log.Println("[SlowDB] search key", []byte(v))
 				return []byte(v), nil
 			}
 			return nil, fmt.Errorf("%s not exist", key)
